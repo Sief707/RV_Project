@@ -256,3 +256,121 @@ Pull Request
 Main
 
 This workflow is mandatory for all five team members.
+
+---
+
+# Accessing The Project Files
+
+The project is stored inside the Linux filesystem:
+
+/home/seifkhalled/RV_Project
+
+Useful commands:
+
+Show current location:
+
+pwd
+
+Go to project:
+
+cd ~/RV_Project
+
+Go to home directory:
+
+cd ~
+
+List files:
+
+ls
+
+List files with details:
+
+ls -la
+
+Show project tree:
+
+tree -L 3
+
+---
+
+# Accessing The Project From Windows
+
+Method 1 (Recommended)
+
+Open Windows File Explorer and enter:
+
+\\wsl$\Ubuntu-24.04\home\seifkhalled\RV_Project
+
+This allows direct access to the project files from Windows.
+
+---
+
+Method 2
+
+From Ubuntu:
+
+/mnt/c/Windows/explorer.exe .
+
+This opens the current folder in Windows Explorer.
+
+---
+
+# Recommended Development Environment
+
+Recommended setup:
+
+- Windows
+- Visual Studio Code
+- WSL Extension
+- Ubuntu 24.04
+- Git
+- RISC-V Toolchain
+- QEMU
+
+Benefits:
+
+- Edit code using VS Code.
+- Compile inside Linux.
+- Run QEMU inside Linux.
+- Use Git directly from Linux.
+- No file copying required.
+
+---
+
+# Opening The Project In VS Code
+
+After installing VS Code and the WSL extension:
+
+cd ~/RV_Project
+
+code .
+
+This opens the project directly in VS Code while keeping all files inside Linux.
+
+---
+
+# Current Project Workspace
+
+Your workspace should look similar to:
+
+/home/seifkhalled
+
+├── RV_Project
+├── qemu
+├── riscv-gnu-toolchain
+└── riscv-toolchain
+
+Where:
+
+RV_Project
+    → Course Project Repository
+
+qemu
+    → QEMU Source Code
+
+riscv-gnu-toolchain
+    → Toolchain Source Code
+
+riscv-toolchain
+    → Installed Toolchain Binaries
+
