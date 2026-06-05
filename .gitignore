@@ -1,0 +1,31 @@
+# Build directories
+build/
+build-host/
+build-riscv/
+
+# Object files
+*.o
+*.obj
+
+# Executables
+*.elf
+*.exe
+*.out
+
+# Libraries
+*.a
+*.so
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
