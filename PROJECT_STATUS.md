@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 1.5 - Infrastructure Verification
+Phase 1.6 - Build System Implementation
 
 ## Completed
 
@@ -14,25 +14,27 @@ Phase 1.5 - Infrastructure Verification
 - Repository architecture created
 - Git workflow documented
 - Cheat sheet documented
+
 - Host compiler verified
 - Host build verified
 - Host executable verified
 - Host execution verified
+
 - RISC-V compiler verified
 - RISC-V build verified
 - RISC-V ELF verified
 - QEMU execution verified
 
+- Host build script implemented
+- RISC-V build script implemented
+- QEMU run script implemented
+
 ## In Progress
 
-- Build system implementation
+- Makefile implementation
 
 ## Pending
 
-- Host build script
-- RISC-V build script
-- QEMU run script
-- Makefile
 - Image framework
 - Convolution engine
 - Gaussian blur

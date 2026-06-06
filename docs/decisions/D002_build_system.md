@@ -11,6 +11,8 @@ build-riscv/
 
 Generated binaries must not be placed in the repository root.
 
+---
+
 ## Host Build
 
 Script:
@@ -35,7 +37,9 @@ build-host/rv_project_host
 
 The executable was executed successfully.
 
-## Future RISC-V Build
+---
+
+## RISC-V Build
 
 Script:
 
@@ -45,19 +49,43 @@ Output:
 
 build-riscv/rv_project_riscv
 
-Status:
+Verification:
 
-Planned
+PASS
 
-## Future QEMU Execution
+The script successfully compiles:
+
+src/main.cpp
+
+and generates:
+
+build-riscv/rv_project_riscv
+
+The generated file was verified as a valid RISC-V ELF executable.
+
+---
+
+## QEMU Execution
 
 Script:
 
 scripts/run_qemu.sh
 
-Status:
+Verification:
 
-Planned
+PASS
+
+The script successfully executes:
+
+build-riscv/rv_project_riscv
+
+using:
+
+qemu-riscv64
+
+and produces the expected output.
+
+---
 
 ## Decision
 
@@ -70,5 +98,22 @@ Build artifacts shall be stored only inside:
 build-host/
 build-riscv/
 
-This keeps the repository clean and ensures reproducible builds.
+The complete automated flow is:
 
+src/main.cpp
+    ↓
+build_host.sh
+    ↓
+build-host/rv_project_host
+
+src/main.cpp
+    ↓
+build_riscv.sh
+    ↓
+build-riscv/rv_project_riscv
+    ↓
+run_qemu.sh
+    ↓
+QEMU Execution
+
+This keeps the repository clean and ensures reproducible builds.
