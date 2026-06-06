@@ -29,3 +29,7 @@ build-riscv/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Infrastructure verification binaries
+rv_project_host
+rv_project_riscv
