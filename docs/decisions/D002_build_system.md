@@ -117,3 +117,29 @@ run_qemu.sh
 QEMU Execution
 
 This keeps the repository clean and ensures reproducible builds.
+
+---
+
+## Makefile
+
+The project provides a top-level Makefile that serves as the primary interface for the build system.
+
+Supported targets:
+
+make host
+make riscv
+make run
+make clean
+
+Verification:
+
+PASS
+
+All targets were successfully executed and verified.
+
+The Makefile delegates build and execution operations to the corresponding scripts located in:
+
+scripts/
+
+This avoids duplication of build logic and provides a single user-friendly entry point for the project.
+
