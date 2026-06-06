@@ -4,7 +4,15 @@ set -e
 
 mkdir -p build-host
 
-g++ src/main.cpp \
+g++ \
+    src/main.cpp \
+    src/image/image.cpp \
+    src/filters/gaussian.cpp \
+    src/filters/sobel.cpp \
+    src/filters/magnitude.cpp \
+    src/filters/direction.cpp \
+    src/pipeline/pipeline.cpp \
+    -Iinclude \
     -o build-host/rv_project_host
 
 echo "Host build completed successfully."

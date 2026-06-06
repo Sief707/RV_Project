@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 1.6 - Build System Implementation
+Phase 3 - Testing
 
 ## Completed
 
@@ -28,23 +28,36 @@ Phase 1.6 - Build System Implementation
 - Host build script implemented
 - RISC-V build script implemented
 - QEMU run script implemented
+- Makefile implemented
+
+- Image I/O implemented
+- Generic convolution implemented
+- Gaussian blur implemented and verified
+- Sobel Gx implemented and verified
+- Sobel Gy implemented and verified
+- Gradient magnitude L1 implemented and verified
+- Gradient magnitude L2 implemented and verified
+- L1 vs L2 comparison completed
+- Direction quantization implemented and verified
+
+- Full scalar pipeline integrated
+- Full scalar pipeline builds and executes successfully
 
 ## In Progress
 
-- Makefile implementation
+- GoogleTest infrastructure
 
 ## Pending
 
-- Image framework
-- Convolution engine
-- Gaussian blur
-- Sobel gradients
-- Magnitude computation
-- Direction quantization
-- Testing
+- Uniform image invariant test
+- Gaussian impulse-response test
+- Zero-gradient invariant test
+- Synthetic edge direction tests
+- Host-side GoogleTest suite
 - Compiler optimization sweep
 - Profiling
 - RVV optimization
 - Final report
-- Bonus features
+- AI usage log
+- README completion
 
