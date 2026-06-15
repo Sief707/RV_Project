@@ -13,7 +13,8 @@ Image hysteresis(const Image& input)
 
     Image output(W, H);
 
-    // Queue for BFS — stores indices of pixels to visit
+
+    // Queue for Breadth First Search (BFS) — stores indices of pixels to visit
     std::queue<uint32_t> to_visit;
 
     // Step 1: copy all strong pixels to output
@@ -27,44 +28,49 @@ Image hysteresis(const Image& input)
         }
     }
 
-    // Step 2: BFS flood fill from every strong pixel
+    // Step 2: BFS Queue is filled from every strong pixel
     // If a neighbor is weak → promote it to strong and continue
     while (!to_visit.empty())
     {
         const uint32_t idx = to_visit.front();
         to_visit.pop();
 
+
+        // convert 1D indices to 2D coordinates
         const uint32_t row = idx / W;
         const uint32_t col = idx % W;
 
         // Check all 8 neighbors
-        for (int32_t dr = -1; dr <= 1; ++dr)
+        for (int32_t delta_row = -1; delta_row <= 1; ++delta_row)
         {
-            for (int32_t dc = -1; dc <= 1; ++dc)
+            for (int32_t delta_column = -1; delta_column <= 1; ++delta_column)
             {
                 // Skip the pixel itself
-                if (dr == 0 && dc == 0)
+                if (delta_row == 0 && delta_column == 0)
                 {
                     continue;
                 }
 
-                const int32_t nr = static_cast<int32_t>(row) + dr;
-                const int32_t nc = static_cast<int32_t>(col) + dc;
+
+                const int32_t neighbor_row = static_cast<int32_t>(row) + delta_row;
+                const int32_t neighbor_column = static_cast<int32_t>(col) + delta_column;
 
                 // Skip if out of bounds
-                if (nr < 0 ||
-                    nc < 0 ||
-                    nr >= static_cast<int32_t>(H) ||
-                    nc >= static_cast<int32_t>(W))
+                if (neighbor_row < 0 ||
+                    neighbor_column < 0 ||
+                    neighbor_row >= static_cast<int32_t>(H) ||
+                    neighbor_column >= static_cast<int32_t>(W))
                 {
                     continue;
                 }
 
                 const uint32_t neighbor_idx =
-                    static_cast<uint32_t>(nr) * W +
-                    static_cast<uint32_t>(nc);
+                static_cast<uint32_t>(neighbor_row) * W + static_cast<uint32_t>(neighbor_column);
 
                 // If neighbor is weak and not yet visited → promote it
+                // If pixel X is WEAK in the input, and it gets reached as a neighbor of some strong/promoted pixel, 
+                // sets output[X] = STRONG — even though input[X] is still WEAK 
+                // (the input array never changes — we only ever write to output).
                 if (input.pixels[neighbor_idx] == WEAK &&
                     output.pixels[neighbor_idx] != STRONG)
                 {
