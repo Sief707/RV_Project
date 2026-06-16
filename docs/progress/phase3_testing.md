@@ -173,3 +173,82 @@ The weak edge is discarded and the output remains zero.
 
 Status:
 PASS
+
+## Review Feedback Follow-Up
+
+### Magnitude
+
+- Negative gradient handling test
+
+Description:
+Negative Gx and Gy values were provided to verify that magnitude computation correctly handles gradient sign.
+
+Expected Result:
+L1 = 7
+L2 = 5
+
+Status:
+PASS
+
+### Direction
+
+- Negative angle quantization test
+
+Description:
+Gradient vectors producing negative angles were provided.
+
+Expected Result:
+Directions are quantized to:
+135°, 135°, and 45°.
+
+Status:
+PASS
+
+### Non-Maximum Suppression
+
+- Vertical maximum preservation test
+
+Description:
+A center pixel with magnitude 20 was placed between weaker vertical neighbors.
+
+Expected Result:
+The center pixel is preserved.
+
+Status:
+PASS
+
+- 45-degree maximum preservation test
+
+Description:
+A center pixel with magnitude 20 was placed between weaker neighbors along the 45° direction.
+
+Expected Result:
+The center pixel is preserved.
+
+Status:
+PASS
+
+- 135-degree maximum preservation test
+
+Description:
+A center pixel with magnitude 20 was placed between weaker neighbors along the 135° direction.
+
+Expected Result:
+The center pixel is preserved.
+
+Status:
+PASS
+
+### Hysteresis
+
+- Weak-edge chain propagation test
+
+Description:
+A chain of weak edges connected to a strong edge was provided.
+
+Expected Result:
+All connected weak edges are promoted to strong edges.
+
+Status:
+PASS
+

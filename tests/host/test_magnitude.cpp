@@ -51,3 +51,25 @@ TEST(Magnitude, SaturatesAt255)
     EXPECT_EQ(l1.pixels[0], 255);
     EXPECT_EQ(l2.pixels[0], 255);
 }
+
+TEST(Magnitude, NegativeGradientsHandling)
+{
+    ImageInt32 gx(1, 1);
+    ImageInt32 gy(1, 1);
+
+    gx.pixels[0] = -3;
+    gy.pixels[0] = -4;
+
+    Image l1 =
+        gradient_magnitude_l1(
+            gx,
+            gy);
+
+    Image l2 =
+        gradient_magnitude_l2(
+            gx,
+            gy);
+
+    EXPECT_EQ(l1.pixels[0], 7);
+    EXPECT_EQ(l2.pixels[0], 5);
+}

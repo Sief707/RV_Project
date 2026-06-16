@@ -37,3 +37,22 @@ TEST(Hysteresis, RemovesIsolatedWeakEdge)
 
     EXPECT_EQ(output.pixels[1 * 3 + 1], 0);
 }
+
+TEST(Hysteresis, PromotesChainOfWeakEdges)
+{
+    Image input(5, 1);
+
+    input.pixels =
+    {
+        255, 128, 128, 128, 0
+    };
+
+    Image output =
+        hysteresis(input);
+
+    EXPECT_EQ(output.pixels[0], 255);
+    EXPECT_EQ(output.pixels[1], 255);
+    EXPECT_EQ(output.pixels[2], 255);
+    EXPECT_EQ(output.pixels[3], 255);
+    EXPECT_EQ(output.pixels[4], 0);
+}
