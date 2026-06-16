@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase 3 - Testing
+Phase 4 - Optimization
 
 ## Completed
 
@@ -47,21 +47,28 @@ Phase 3 - Testing
 - Full scalar pipeline integrated
 - Full scalar pipeline builds and executes successfully
 
+- GoogleTest infrastructure implemented and verified
+- Host-side GoogleTest suite implemented and verified
+
+- Gaussian verification suite completed
+- Sobel verification suite completed
+- Magnitude verification suite completed
+- Direction verification suite completed
+- Non-Maximum Suppression verification suite completed
+- Double Threshold verification suite completed
+- Hysteresis verification suite completed
+
 ## In Progress
 
-- GoogleTest infrastructure
+None
 
 ## Pending
 
-- Uniform image invariant test
-- Gaussian impulse-response test
-- Zero-gradient invariant test
-- Synthetic edge direction tests
-- Host-side GoogleTest suite
 - Compiler optimization sweep
 - Profiling
 - RVV optimization
 - Final report
 - AI usage log
 - README completion
+
 
