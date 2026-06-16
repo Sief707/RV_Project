@@ -12,6 +12,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <numeric>
 
 static void save_ppm(const std::string& filename, const Image& img)
 {
@@ -28,6 +29,85 @@ static void save_ppm(const std::string& filename, const Image& img)
         file << "\n";
     }
     printf("Saved: %s\n", filename.c_str());
+}
+
+static void print_stats(const std::string& label, const Image& img)
+{
+uint8_t minval = *std::min_element(img.pixels.begin(), img.pixels.end());
+uint8_t maxval = *std::max_element(img.pixels.begin(), img.pixels.end());
+
+uint64_t sum = std::accumulate(img.pixels.begin(), img.pixels.end(), (uint64_t)0);
+double avg = (double)sum / img.pixels.size();
+
+uint32_t nonzero = 0;
+for (uint8_t p : img.pixels)
+if (p > 0) nonzero++;
+
+printf(" %-25s min=%3d max=%3d avg=%6.2f nonzero=%u\n",
+label.c_str(), minval, maxval, avg, nonzero);
+}
+
+static void print_comparison_report(
+const Image& mag_l1, const Image& mag_l2,
+const Image& thin_l1, const Image& thin_l2,
+const Image& thresh_l1, const Image& thresh_l2,
+const Image& edges_l1, const Image& edges_l2)
+{
+auto count_nonzero = [](const Image& img) {
+uint32_t n = 0;
+for (uint8_t p : img.pixels) if (p > 0) n++;
+return n;
+};
+
+auto avg_val = [](const Image& img) {
+uint64_t sum = 0;
+for (uint8_t p : img.pixels) sum += p;
+return (double)sum / img.pixels.size();
+};
+
+printf("\n");
+printf("╔══════════════════════════════════════════════════════════════╗\n");
+printf("║ L1 vs L2 Magnitude — Full Pipeline Report ║\n");
+printf("╠══════════════════════════════════════════════════════════════╣\n");
+printf("║ %-22s %-17s %-17s ║\n", "Stage", "L1", "L2");
+printf("╠══════════════════════════════════════════════════════════════╣\n");
+printf("║ %-22s %-17.2f %-17.2f ║\n", "Magnitude avg", avg_val(mag_l1), avg_val(mag_l2));
+printf("║ %-22s %-17u %-17u ║\n", "Magnitude nonzero", count_nonzero(mag_l1), count_nonzero(mag_l2));
+printf("║ %-22s %-17u %-17u ║\n", "After NMS nonzero", count_nonzero(thin_l1), count_nonzero(thin_l2));
+printf("║ %-22s %-17u %-17u ║\n", "After threshold", count_nonzero(thresh_l1), count_nonzero(thresh_l2));
+printf("║ %-22s %-17u %-17u ║\n", "Final edges", count_nonzero(edges_l1), count_nonzero(edges_l2));
+printf("╠══════════════════════════════════════════════════════════════╣\n");
+printf("║ %-22s %-17s %-17s ║\n", "Formula", "|Gx|+|Gy|", "sqrt(Gx^2+Gy^2)");
+printf("║ %-22s %-17s %-17s ║\n", "Speed", "faster", "slower");
+printf("║ %-22s %-17s %-17s ║\n", "Accuracy", "approximate", "exact");
+printf("║ %-22s %-17s %-17s ║\n", "Standard Canny?", "No", "Yes");
+printf("╚══════════════════════════════════════════════════════════════╝\n");
+
+printf("\n");
+printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+printf(" Why two methods?\n");
+printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+printf("\n");
+printf(" L1 norm: M = |Gx| + |Gy|\n");
+printf(" - No sqrt() call → faster on embedded hardware\n");
+printf(" - Always >= L2 mathematically (triangle inequality)\n");
+printf(" - Overestimates diagonal gradients\n");
+printf(" - Good for real-time systems where speed matters\n");
+printf("\n");
+printf(" L2 norm: M = sqrt(Gx^2 + Gy^2)\n");
+printf(" - True Euclidean distance in gradient space\n");
+printf(" - Standard Canny algorithm uses this\n");
+printf(" - More accurate edge strength measurement\n");
+printf(" - sqrt() is expensive on RISC-V without FPU\n");
+printf("\n");
+printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+printf(" Conclusion\n");
+printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+printf("\n");
+printf(" Use L2 for: accuracy, standard compliance, final results\n");
+printf(" Use L1 for: speed-critical embedded systems, approximation\n");
+printf(" On RISC-V with RVV: L2 cost can be reduced using vector sqrt\n");
+printf("\n");
 }
 
 void run_pipeline(const Image& input)
@@ -106,6 +186,10 @@ void run_pipeline(const Image& input)
     print_stats("Final edges L2", edges_l2);
 
     printf("\nAll done! Run: eog images/ to see all stages\n");
+
+    print_comparison_report( magnitude_l1, magnitude_l2,
+    thinned_l1, thinned_l2, thresholded_I1, thresholded_I2,
+    edges_l1, edges_l2);
 
     (void)magnitude_l1;
     (void)magnitude_l2;
