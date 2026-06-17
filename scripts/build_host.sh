@@ -15,7 +15,10 @@ g++ \
     src/filters/threshold.cpp \
     src/filters/hysterisis.cpp \
     src/pipeline/pipeline.cpp \
+    benchmarks/timing.cpp \
     -Iinclude \
+    -Ibenchmarks \
+    ${OPT_LEVEL:- -O0} \
     -o build-host/rv_project_host
 
 echo "Host build completed successfully."
