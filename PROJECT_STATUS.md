@@ -40,6 +40,10 @@ Phase 3 - Testing
 - L1 vs L2 comparison completed
 - Direction quantization implemented and verified
 
+- Non-Maximum Suppression implemented and verified
+- Double Threshold implemented and verified
+- Hysteresis edge tracking implemented and verified
+
 - Full scalar pipeline integrated
 - Full scalar pipeline builds and executes successfully
 
