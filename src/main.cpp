@@ -2,13 +2,13 @@
 
 #include "image/image.hpp"
 #include "pipeline/pipeline.hpp"
+#include "config.hpp"
 
 int main()
 {
-    const uint32_t W = 512;
-    const uint32_t H = 512;
+    Image image(IMAGE_WIDTH, IMAGE_HEIGHT);
 
-    Image image(W, H);
+    // Accept width and height from command line
     
     if (!image.load_raw("images/input.raw"))
     {
