@@ -119,7 +119,7 @@ return (double)sum / img.pixels.size();
 
 printf("\n");
 printf("╔════════════════════════════════════════════════════════════╗\n");
-printf("║ L1 vs L2 Magnitude — Full Pipeline Report ║\n");
+printf("║           L1 vs L2 Magnitude — Full Pipeline Report        ║\n");
 printf("╠════════════════════════════════════════════════════════════╣\n");
 printf("║ %-22s %-17s %-17s ║\n", "Stage", "L1", "L2");
 printf("╠════════════════════════════════════════════════════════════╣\n");
