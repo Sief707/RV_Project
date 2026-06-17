@@ -33,3 +33,5 @@ Thumbs.db
 # Infrastructure verification binaries
 rv_project_host
 rv_project_riscv
+gen
+images/
