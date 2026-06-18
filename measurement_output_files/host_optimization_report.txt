@@ -1,0 +1,194 @@
+=== PHASE 4: HOST OPTIMIZATION SWEEP ===
+Started: Thu Jun 18 15:02:14 EEST 2026
+Binary:  build-host/rv_project_host
+Runs per level: 5
+
+==================================================
+OPTIMIZATION LEVEL: -O0
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  50582	   1016	    608	  52206	   cbee	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 88K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 15.8394 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 16.314 ms
+  Run 2: 17.385 ms
+  Run 3: 16.357 ms
+  Run 4: 16.975 ms
+  Run 5: 17.080 ms
+
+  Min: 16.314 ms  |  Avg: 16.822 ms  |  Max: 17.385 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+==================================================
+OPTIMIZATION LEVEL: -O1
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  24833	   1456	    608	  26897	   6911	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 46K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 4.95174 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 4.310 ms
+  Run 2: 4.597 ms
+  Run 3: 4.439 ms
+  Run 4: 4.612 ms
+  Run 5: 4.068 ms
+
+  Min: 4.068 ms  |  Avg: 4.405 ms  |  Max: 4.612 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+==================================================
+OPTIMIZATION LEVEL: -O2
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  26014	   1496	    608	  28118	   6dd6	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 47K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 5.72237 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 4.186 ms
+  Run 2: 4.193 ms
+  Run 3: 4.015 ms
+  Run 4: 4.038 ms
+  Run 5: 5.216 ms
+
+  Min: 4.015 ms  |  Avg: 4.330 ms  |  Max: 5.216 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+==================================================
+OPTIMIZATION LEVEL: -O3
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  27471	   1488	    608	  29567	   737f	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 46K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 3.39861 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 3.139 ms
+  Run 2: 3.463 ms
+  Run 3: 3.021 ms
+  Run 4: 3.208 ms
+  Run 5: 3.120 ms
+
+  Min: 3.021 ms  |  Avg: 3.190 ms  |  Max: 3.463 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+==================================================
+OPTIMIZATION LEVEL: -Os
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  16892	    896	    608	  18396	   47dc	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 38K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 4.70026 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 5.060 ms
+  Run 2: 4.009 ms
+  Run 3: 5.187 ms
+  Run 4: 4.395 ms
+  Run 5: 4.087 ms
+
+  Min: 4.009 ms  |  Avg: 4.548 ms  |  Max: 5.187 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+==================================================
+OPTIMIZATION LEVEL: -Ofast
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown (text/data/bss) ]
+   text	   data	    bss	    dec	    hex	filename
+  27591	   1496	    608	  29695	   73ff	build-host/rv_project_host
+
+[ Binary Size - Total File ]
+  Size: 48K  (build-host/rv_project_host)
+
+[ Execution Time (internal measurement) ]
+  Execution time: 3.75198 ms
+
+[ Wall-Clock Timing (5 runs: min / avg / max) ]
+  Five runs for stable statistics — used for speedup comparison.
+  (python3 time.perf_counter, ms resolution)
+  Run 1: 3.177 ms
+  Run 2: 3.347 ms
+  Run 3: 2.845 ms
+  Run 4: 3.033 ms
+  Run 5: 3.224 ms
+
+  Min: 2.845 ms  |  Avg: 3.125 ms  |  Max: 3.347 ms
+
+  NOTE: QEMU is not cycle-accurate. Absolute values are not
+  meaningful; only relative comparisons between levels are.
+
+
+=== AUTO-FILLED SUMMARY TABLE ===
+Generated automatically from sweep data.
+
+  Flag   | text(bytes) |   Total | Avg (5 runs) | Speedup vs O0
+  -------+-------------+---------+--------------+--------------
+  -O0    |       50582 |     88K |     16.822 ms |         1.00x
+  -O1    |       24833 |     46K |      4.405 ms |         3.82x  <- best perf/size
+  -O2    |       26014 |     47K |       4.33 ms |         3.88x
+  -O3    |       27471 |     46K |       3.19 ms |         5.27x  <- best perf/size
+  -Os    |       16892 |     38K |      4.548 ms |         3.70x
+  -Ofast |       27591 |     48K |      3.125 ms |         5.38x
+
+  Best performance-per-size tradeoff: -O3 (Step 3 finding)
+  Speedup formula: time_O0_avg / time_Ox_avg  |  base = 16.822 ms

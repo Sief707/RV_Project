@@ -1,0 +1,25 @@
+=== PHASE 4: RISC-V PADDING EXPERIMENT — COMPARISON REPORT ===
+Technique: pre-pad image with zeros before convolution (RISC-V)
+Flag:      -DUSE_PADDED_CONV
+File:      include/filters/convolution.hpp
+
+============================================================
+SUMMARY (RISC-V)
+============================================================
+                                   BEFORE     AFTER    CHANGE
+  -------------------------------+----------+----------+---------
+  Loops vectorized (src/)               0         2        +2
+  Loops missed (src/)                 217       222        +5
+
+============================================================
+LOOPS FIXED BY PADDING (2 loop(s) no longer missed)
+============================================================
+  src/filters/gaussian.cpp:
+    src/filters/gaussian.cpp:9:7: missed: splitting region at control altering definition _142 = operator new (100);
+    src/filters/gaussian.cpp:27:43: missed: not vectorized: statement can throw an exception: Image::Image (output_19(D), prephitmp_436, _151);
+
+============================================================
+NEWLY VECTORIZED LOOPS (2 loop(s) now auto-vectorized)
+============================================================
+  include/filters/convolution.hpp:142:40: optimized: loop vectorized using variable length vectors
+  include/filters/convolution.hpp:142:40: optimized: loop vectorized using variable length vectors
