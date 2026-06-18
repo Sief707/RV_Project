@@ -7,6 +7,7 @@
 #include "filters/NMS.hpp"
 #include "filters/threshold.hpp"
 #include "filters/hysterisis.hpp"
+#include "timing.hpp"
 
 #include <cstdio>
 #include <fstream>
@@ -14,6 +15,7 @@
 #include <algorithm>
 #include <numeric>
 #include <vector>
+#include <time.h>
 
 static void save_ppm(const std::string& filename, const Image& img)
 {
@@ -119,7 +121,7 @@ return (double)sum / img.pixels.size();
 
 printf("\n");
 printf("╔════════════════════════════════════════════════════════════╗\n");
-printf("║           L1 vs L2 Magnitude — Full Pipeline Report        ║\n");
+printf("║ L1 vs L2 Magnitude — Full Pipeline Report ║\n");
 printf("╠════════════════════════════════════════════════════════════╣\n");
 printf("║ %-22s %-17s %-17s ║\n", "Stage", "L1", "L2");
 printf("╠════════════════════════════════════════════════════════════╣\n");
@@ -162,110 +164,135 @@ printf(" On RISC-V with RVV: L2 cost can be reduced using vector sqrt\n");
 printf("\n");
 }
 
-void run_pipeline(const Image& input)
+
+// ── Core pipeline ─────────────────────────────────────────────────────────────
+// Runs every stage once, returns all intermediate images, and fills timings.
+// Both run_pipeline() and profile_pipeline() call this so the stages
+// execute exactly once regardless of which entry point is used.
+static PipelineResult run_pipeline_internal(const Image& input)
 {
-save_ppm("images/00_input.ppm", input);
+PipelineResult r;
 
 // ==================== step 1: gaussian blur ==================================
-Image blurred =
-gaussian_blur(input);
-save_ppm("images/01_blurred.ppm", blurred);
+start_timer();
+r.blurred = gaussian_blur(input);
+r.timings.gaussian_ms = stop_timer(1);
+
 // For debugging
-uint8_t max_blur = *std::max_element(blurred.pixels.begin(), blurred.pixels.end());
+uint8_t max_blur = *std::max_element(r.blurred.pixels.begin(), r.blurred.pixels.end());
+(void)max_blur;
 printf("Stage 1 done: Gaussian blur — max pixel = %d\n", max_blur);
 
 // ================== step 2: sobel gradient (Gx, Gy) ==========================
-ImageInt32 gx =
-sobel_x(blurred);
+start_timer();
+r.gx = sobel_x(r.blurred);
+r.gy = sobel_y(r.blurred);
+r.timings.sobel_ms = stop_timer(1);
 
-ImageInt32 gy =
-sobel_y(blurred);
 // For debugging
-int32_t max_gx = *std::max_element(gx.pixels.begin(), gx.pixels.end());
+int32_t max_gx = *std::max_element(r.gx.pixels.begin(), r.gx.pixels.end());
+(void)max_gx;
 printf("Stage 2 done: Sobel — max gx = %d\n", max_gx);
+
 // get the magnitude as |Gx|+|Gy|
-Image magnitude_l1 =
-gradient_magnitude_l1(
-gx,
-gy);
+start_timer();
+r.magnitude_l1 = gradient_magnitude_l1(r.gx, r.gy);
 // get the magnitude as sqrt(Gx^2+Gy^2)
-Image magnitude_l2 =
-gradient_magnitude_l2(
-gx,
-gy);
-save_ppm("images/02_magnitude_l1.ppm", magnitude_l1);
-save_ppm("images/02_magnitude_l2.ppm", magnitude_l2);
+r.magnitude_l2 = gradient_magnitude_l2(r.gx, r.gy);
+r.timings.magnitude_ms = stop_timer(1);
+
 // For comparing between these 2 ways of magnitude calculation
-print_stats("L1 |Gx|+|Gy|", magnitude_l1);
-print_stats("L2 sqrt(Gx^2+Gy^2)", magnitude_l2);
+print_stats("L1 |Gx|+|Gy|", r.magnitude_l1);
+print_stats("L2 sqrt(Gx^2+Gy^2)", r.magnitude_l2);
 printf("Stage 3 done: Magnitude L1 and L2\n");
 
 // get the direction
-Image direction =
-gradient_direction(
-gx,
-gy);
+start_timer();
+r.direction = gradient_direction(r.gx, r.gy);
+r.timings.direction_ms = stop_timer(1);
 printf("Stage 4 done: Direction\n");
 
 // Apply all following steps on both gradient_magnitude_l1, gradient_magnitude_l2
 // to see the resulted output image obtained from using both of them
 
 // ====================== step 3: non max suppression (NMS) =====================
-Image thinned_l1 = non_max_suppression(magnitude_l1, direction);
-Image thinned_l2 = non_max_suppression(magnitude_l2, direction);
-save_ppm("images/03_thinned_l1.ppm", thinned_l1);
-save_ppm("images/03_thinned_l2.ppm", thinned_l2);
+start_timer();
+r.thinned_l1 = non_max_suppression(r.magnitude_l1, r.direction);
+r.thinned_l2 = non_max_suppression(r.magnitude_l2, r.direction);
+r.timings.nms_ms = stop_timer(1);
+
 printf("\n[Stage 5] Non-Max Suppression:\n");
-print_stats("NMS on L1", thinned_l1);
-print_stats("NMS on L2", thinned_l2);
+print_stats("NMS on L1", r.thinned_l1);
+print_stats("NMS on L2", r.thinned_l2);
 
 // ==================== step 4: double thresholding ==============================
-Image thresholded_I1 = double_threshold(thinned_l1, 50, 150);
-Image thresholded_I2 = double_threshold(thinned_l2, 50, 150);
-save_ppm("images/04_thresholded_l1.ppm", thresholded_I1);
-save_ppm("images/04_thresholded_l2.ppm", thresholded_I2);
+start_timer();
+r.thresholded_l1 = double_threshold(r.thinned_l1, 50, 150);
+r.thresholded_l2 = double_threshold(r.thinned_l2, 50, 150);
+r.timings.threshold_ms = stop_timer(1);
+
 printf("\n[Stage 6] Double Threshold (low=50, high=150):\n");
-print_stats("Threshold on L1", thresholded_I1);
-print_stats("Threshold on L2", thresholded_I2);
+print_stats("Threshold on L1", r.thresholded_l1);
+print_stats("Threshold on L2", r.thresholded_l2);
 
 // ===================== step 5: hysterisis ==========================
-Image edges_l1 = hysteresis(thresholded_I1);
-Image edges_l2 = hysteresis(thresholded_I2);
-save_ppm("images/05_edges_l1.ppm", edges_l1);
-save_ppm("images/05_edges_l2.ppm", edges_l2);
+start_timer();
+r.edges_l1 = hysteresis(r.thresholded_l1);
+r.edges_l2 = hysteresis(r.thresholded_l2);
+r.timings.hysteresis_ms = stop_timer(1);
+
 printf("\n[Stage 7] Hysteresis (final edge map):\n");
-print_stats("Final edges L1", edges_l1);
-print_stats("Final edges L2", edges_l2);
+print_stats("Final edges L1", r.edges_l1);
+print_stats("Final edges L2", r.edges_l2);
+
+r.timings.total_ms = r.timings.gaussian_ms + r.timings.sobel_ms +
+r.timings.magnitude_ms + r.timings.direction_ms +
+r.timings.nms_ms + r.timings.threshold_ms +
+r.timings.hysteresis_ms;
+
+return r;
+}
+
+// ── Public entry point: run pipeline + save images ───────────────────────────
+void run_pipeline(const Image& input)
+{
+PipelineResult r = run_pipeline_internal(input);
 
 printf("\nAll done! Run: eog images/ to see all stages\n");
 
-print_comparison_report( magnitude_l1, magnitude_l2,
-thinned_l1, thinned_l2, thresholded_I1, thresholded_I2,
-edges_l1, edges_l2);
+print_comparison_report( r.magnitude_l1, r.magnitude_l2,
+r.thinned_l1, r.thinned_l2, r.thresholded_l1, r.thresholded_l2,
+r.edges_l1, r.edges_l2);
+
 
 std::vector<Stage> stages_I1 = {
 { "Input", input },
-{ "Gaussian Blur", blurred },
-{ "Magnitude", magnitude_l1 },
-{ "NMS", thinned_l1 },
-{ "Double Threshold", thresholded_I1},
-{ "Final Edges", edges_l1 }
+{ "Gaussian Blur", r.blurred },
+{ "Magnitude", r.magnitude_l1 },
+{ "NMS", r.thinned_l1 },
+{ "Double Threshold", r.thresholded_l1},
+{ "Final Edges", r.edges_l1 }
 };
 
 std::vector<Stage> stages_I2 = {
 { "Input", input },
-{ "Gaussian Blur", blurred },
-{ "Magnitude", magnitude_l2 },
-{ "NMS", thinned_l2 },
-{ "Double Threshold", thresholded_I2},
-{ "Final Edges", edges_l2 }
+{ "Gaussian Blur", r.blurred },
+{ "Magnitude", r.magnitude_l2 },
+{ "NMS", r.thinned_l2 },
+{ "Double Threshold", r.thresholded_l2},
+{ "Final Edges", r.edges_l2 }
 };
 
 save_grid_ppm("images/pipeline_grid_I1.ppm", stages_I1, "Canny Pipeline_I1");
 save_grid_ppm("images/pipeline_grid_I2.ppm", stages_I2, "Canny Pipeline_I2");
 
+(void)stages_I1;
+}
 
-(void)magnitude_l1;
-(void)magnitude_l2;
-(void)direction;
+// ── Public entry point: profile only (no file I/O) ───────────────────────────
+// Runs the pipeline once and returns per-stage timings.
+// Called from main.cpp inside the timing loop.
+StageTimings profile_pipeline(const Image& input)
+{
+return run_pipeline_internal(input).timings;
 }
