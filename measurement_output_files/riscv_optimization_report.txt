@@ -1,0 +1,210 @@
+=== PHASE 4: RISC-V / QEMU OPTIMIZATION SWEEP ===
+Started: Thu Jun 18 15:03:04 EEST 2026
+Binary:   build-riscv/rv_project_riscv
+QEMU:     rv64,v=true,vlen=128
+Runs per level: 5
+
+==================================================
+OPTIMIZATION LEVEL: -O0
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 616333	   4262	  12120	 632715	  9a78b	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.3M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 250.072 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 246.152 ms
+  Run 2: 235.097 ms
+  Run 3: 234.173 ms
+  Run 4: 236.611 ms
+  Run 5: 262.832 ms
+
+  Min: 234.173 ms  |  Avg: 242.973 ms  |  Max: 262.832 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+==================================================
+OPTIMIZATION LEVEL: -O1
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 584065	   4302	  12112	 600479	  9299f	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.2M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 23.576 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 23.343 ms
+  Run 2: 29.164 ms
+  Run 3: 38.287 ms
+  Run 4: 29.494 ms
+  Run 5: 24.289 ms
+
+  Min: 23.343 ms  |  Avg: 28.916 ms  |  Max: 38.287 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+==================================================
+OPTIMIZATION LEVEL: -O2
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 583997	   4302	  12112	 600411	  9295b	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.2M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 25.539 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 24.761 ms
+  Run 2: 22.889 ms
+  Run 3: 34.061 ms
+  Run 4: 35.510 ms
+  Run 5: 23.340 ms
+
+  Min: 22.889 ms  |  Avg: 28.112 ms  |  Max: 35.510 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+==================================================
+OPTIMIZATION LEVEL: -O3
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 586349	   4302	  12112	 602763	  9328b	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.2M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 19.850 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 19.429 ms
+  Run 2: 19.257 ms
+  Run 3: 20.282 ms
+  Run 4: 20.437 ms
+  Run 5: 20.958 ms
+
+  Min: 19.257 ms  |  Avg: 20.073 ms  |  Max: 20.958 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+==================================================
+OPTIMIZATION LEVEL: -Os
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 580317	   4302	  12120	 596739	  91b03	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.2M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 20.993 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 21.330 ms
+  Run 2: 20.323 ms
+  Run 3: 20.008 ms
+  Run 4: 19.685 ms
+  Run 5: 19.783 ms
+
+  Min: 19.685 ms  |  Avg: 20.226 ms  |  Max: 21.330 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+==================================================
+OPTIMIZATION LEVEL: -Ofast
+==================================================
+Compilation: SUCCESS
+
+[ Binary Size - Section Breakdown ]
+   text	   data	    bss	    dec	    hex	filename
+ 586325	   4310	  12112	 602747	  9327b	build-riscv/rv_project_riscv
+
+[ Binary Size - Total File ]
+  Size: 1.2M  (build-riscv/rv_project_riscv)
+
+[ Step 2 - Execution Time (single run on QEMU) ]
+  One wall-clock measurement per level — used for the Step 2 table.
+  Execution time: 19.387 ms
+
+[ Step 6 - Wall-Clock Timing on QEMU (5 runs: min / avg / max) ]
+  (qemu-riscv64 -cpu rv64,v=true,vlen=128)
+  Run 1: 19.593 ms
+  Run 2: 19.106 ms
+  Run 3: 19.288 ms
+  Run 4: 19.040 ms
+  Run 5: 19.219 ms
+
+  Min: 19.040 ms  |  Avg: 19.249 ms  |  Max: 19.593 ms
+
+  NOTE: QEMU is not cycle-accurate. Only relative comparisons
+  between -O levels are valid (instruction count changes).
+
+
+=== AUTO-FILLED SUMMARY TABLE ===
+Generated automatically from sweep data.
+
+  Flag   |   Total | Avg (5 runs) | Speedup vs O0
+  -------+---------+--------------+--------------
+  -O0    |    1.3M |    242.973 ms |         1.00x
+  -O1    |    1.2M |     28.916 ms |         8.40x
+  -O2    |    1.2M |     28.112 ms |         8.64x
+  -O3    |    1.2M |     20.073 ms |        12.10x
+  -Os    |    1.2M |     20.226 ms |        12.01x
+  -Ofast |    1.2M |     19.249 ms |        12.62x
+
+  Speedup formula: time_O0_avg / time_Ox_avg  |  base = 242.973 ms
+
+============================================================
+HOST vs RISC-V COMPARISON (Step 7)
+============================================================
+  Flag   |   Host avg |   RISC-V avg |  RISC-V overhead
+  -------+------------+--------------+-----------------
+  -O0    |   16.822 ms |    242.973 ms |           14.4x slower
+  -O1    |    4.405 ms |     28.916 ms |            6.6x slower
+  -O2    |     4.33 ms |     28.112 ms |            6.5x slower
+  -O3    |     3.19 ms |     20.073 ms |            6.3x slower
+  -Os    |    4.548 ms |     20.226 ms |            4.4x slower
+  -Ofast |    3.125 ms |     19.249 ms |            6.2x slower
+
+  NOTE: RISC-V runs slower than host because QEMU translates every
+  RISC-V instruction to x86 at runtime. This is expected. The
+  relative speedup pattern across -O levels should be similar on both.

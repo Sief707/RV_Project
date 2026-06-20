@@ -11,11 +11,15 @@ g++ \
     src/filters/sobel.cpp \
     src/filters/magnitude.cpp \
     src/filters/direction.cpp \
+    src/filters/direction_fast.cpp \
     src/filters/NMS.cpp \
     src/filters/threshold.cpp \
     src/filters/hysterisis.cpp \
     src/pipeline/pipeline.cpp \
+    benchmarks/timing.cpp \
     -Iinclude \
+    -Ibenchmarks \
+    ${OPT_LEVEL:- -O0} \
     -o build-host/rv_project_host
 
 echo "Host build completed successfully."

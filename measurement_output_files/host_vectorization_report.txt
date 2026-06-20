@@ -1,0 +1,599 @@
+=== PHASE 4 STEP 5: AUTO-VECTORIZATION ANALYSIS — HOST (x86) ===
+Source log  : host_vectorization_log.txt
+Report file : host_vectorization_report.txt
+Flags used  : -fopt-info-vec-all (applied during sweep)
+
+System header misses are filtered out — only src/ failures shown.
+These are the loops in YOUR code that the compiler could not vectorize.
+
+============================================================
+OPTIMIZATION LEVEL: -O0
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 0 loop(s) in src/ failed to vectorize ]
+  (none — or vectorization not attempted at this level)
+
+============================================================
+OPTIMIZATION LEVEL: -O1
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 0 loop(s) in src/ failed to vectorize ]
+  (none — or vectorization not attempted at this level)
+
+============================================================
+OPTIMIZATION LEVEL: -O2
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 169 loop(s) in src/ failed to vectorize ]
+  src/filters/NMS.cpp:
+    src/filters/NMS.cpp:15:50: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:15:50: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:17:52: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:17:52: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:12:22: missed: statement clobbers memory: Image::Image (output_48(D), W_46, H_47);
+  src/filters/direction.cpp:
+    src/filters/direction.cpp:12:28: missed: couldn't vectorize loop
+    src/filters/direction.cpp:12:28: missed: not vectorized: control flow in loop.
+    src/filters/direction.cpp:10:37: missed: statement clobbers memory: Image::Image (output_16(D), _2, _1);
+    src/filters/direction.cpp:15:23: missed: statement clobbers memory: _7 = atan2 (_6, _4);
+  src/filters/gaussian.cpp:
+    src/filters/gaussian.cpp:29:28: missed: couldn't vectorize loop
+    src/filters/gaussian.cpp:29:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/gaussian.cpp:9:7: missed: splitting region at control altering definition _154 = operator new (100);
+    src/filters/gaussian.cpp:18:5: missed: splitting region at dominance boundary bb3
+    src/filters/gaussian.cpp:27:43: missed: not vectorized: statement can throw an exception: Image::Image (output_44(D), prephitmp_186, _62);
+    src/filters/gaussian.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 9
+    src/filters/gaussian.cpp:40:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/hysterisis.cpp:
+    src/filters/hysterisis.cpp:35:45: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:35:45: missed: not vectorized: multiple nested loops.
+    src/filters/hysterisis.cpp:9:7: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:49:36: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:49:36: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:24:27: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:24:27: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:9:7: missed: splitting region at control altering definition _109 = operator new (64);
+    src/filters/hysterisis.cpp:14:22: missed: statement clobbers memory: Image::Image (output_39(D), W_37, H_38);
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 15
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 12
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 3
+    src/filters/hysterisis.cpp:46:58: missed: splitting region at loop 3 exit at bb37
+    src/filters/hysterisis.cpp:44:48: missed: splitting region at dominance boundary bb18
+    src/filters/hysterisis.cpp:33:12: missed: splitting region at dominance boundary bb47
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb48
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb49
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb50
+  src/filters/magnitude.cpp:
+    src/filters/magnitude.cpp:13:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:13:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:11:37: missed: statement clobbers memory: Image::Image (output_15(D), _2, _1);
+    src/filters/magnitude.cpp:33:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:33:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:31:37: missed: statement clobbers memory: Image::Image (output_18(D), _2, _1);
+  src/filters/sobel.cpp:
+    src/filters/sobel.cpp:24:12: missed: splitting region at control altering definition _42 = operator new (36);
+    src/filters/sobel.cpp:31:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:37:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve<int> (input_17(D), &kernel, 3, 3); [return slot optimization]
+    src/filters/sobel.cpp:37:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:38:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+    src/filters/sobel.cpp:8:12: missed: splitting region at control altering definition _42 = operator new (36);
+    src/filters/sobel.cpp:15:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:21:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve<int> (input_17(D), &kernel, 3, 3); [return slot optimization]
+    src/filters/sobel.cpp:21:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:22:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/threshold.cpp:
+    src/filters/threshold.cpp:14:28: missed: couldn't vectorize loop
+    src/filters/threshold.cpp:14:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/threshold.cpp:12:43: missed: statement clobbers memory: Image::Image (output_9(D), _2, _1);
+  src/image/image.cpp:
+    src/image/image.cpp:12:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:55:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:18:6: missed: splitting region at control altering definition _43 = std::basic_filebuf<char>::open (&file._M_filebuf, _30, 12);
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:27:14: missed: not vectorized: statement can throw an exception: std::basic_istream<char>::read (&file.D.60444, _15, _16);
+    src/image/image.cpp:31:1: missed: statement clobbers memory: std::basic_ifstream<char>::~basic_ifstream (&file);
+    src/image/image.cpp:33:6: missed: splitting region at control altering definition _39 = std::basic_filebuf<char>::open (&file._M_filebuf, _29, 20);
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:42:15: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60614, _14, _15);
+    src/image/image.cpp:46:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+  src/main.cpp:
+    src/main.cpp:25:21: missed: couldn't vectorize loop
+    src/main.cpp:25:21: missed: not vectorized: control flow in loop.
+    src/main.cpp:7:5: missed: splitting region at control altering definition _44 = std::__cxx11::basic_string<char>::_M_create (&D.56666, &__dnew, 0);
+    src/main.cpp:11:42: missed: statement clobbers memory: Image::Image (&image, 168, 128);
+    src/main.cpp:12:24: missed: not vectorized: statement can throw an exception: _11 = Image::load_raw (&image, &D.56666);
+    src/main.cpp:12:24: missed: splitting region at control altering definition _17 = stop_timer (100);
+    src/main.cpp:19:17: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:22:16: missed: not vectorized: statement can throw an exception: start_timer ();
+    src/main.cpp:25:21: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:27:44: missed: not vectorized: statement can throw an exception: _17 = stop_timer (100);
+    src/main.cpp:27:44: missed: splitting region at control altering definition _19 = std::operator<< <std::char_traits<char> > (&cout, "MEASURED_TIME_MS: ");
+    src/main.cpp:29:18: missed: not vectorized: statement can throw an exception: _19 = std::operator<< <std::char_traits<char> > (&cout, "MEASURED_TIME_MS: ");
+    src/main.cpp:29:18: missed: splitting region at control altering definition _8 = std::basic_ostream<char>::_M_insert<double> (_19, _17);
+    src/main.cpp:30:18: missed: not vectorized: statement can throw an exception: _21 = std::operator<< <std::char_traits<char> > (&cout, "Pipeline executed successfully.");
+    src/main.cpp:30:18: missed: splitting region at dominance boundary bb35
+    src/main.cpp:14:22: missed: not vectorized: statement can throw an exception: std::operator<< <std::char_traits<char> > (&cerr, "ERROR: could not load images/input.raw\n");
+    src/main.cpp:14:22: missed: splitting region at dominance boundary bb26
+    src/main.cpp:7:5: missed: splitting region at dominance boundary bb19
+    src/main.cpp:7:5: missed: splitting region at dominance boundary bb20
+    src/main.cpp:7:5: missed: not vectorized: statement can throw an exception: resx 6
+  src/pipeline/pipeline.cpp:
+    src/pipeline/pipeline.cpp:69:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:69:24: missed: not vectorized: multiple nested loops.
+    src/pipeline/pipeline.cpp:57:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:57:24: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:58:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:58:24: missed: not vectorized: number of iterations cannot be computed.
+    src/pipeline/pipeline.cpp:263:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:263:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:254:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:254:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:166:6: missed: splitting region at control altering definition gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:172:20: missed: statement clobbers memory: blurred = gaussian_blur (input_111(D)); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: not vectorized: statement can throw an exception: gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: splitting region at control altering definition gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: not vectorized: statement can throw an exception: gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: splitting region at control altering definition magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: not vectorized: statement can throw an exception: magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: splitting region at control altering definition magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: not vectorized: statement can throw an exception: magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: splitting region at control altering definition direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: not vectorized: statement can throw an exception: direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: splitting region at control altering definition thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: not vectorized: statement can throw an exception: thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: splitting region at control altering definition thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: not vectorized: statement can throw an exception: thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: splitting region at control altering definition thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: not vectorized: statement can throw an exception: thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: splitting region at control altering definition thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: not vectorized: statement can throw an exception: thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: splitting region at control altering definition edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: not vectorized: statement can throw an exception: edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: splitting region at control altering definition edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: not vectorized: statement can throw an exception: edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: splitting region at control altering definition _412 = operator new (_398);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 119
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 28
+    src/pipeline/pipeline.cpp:254:1: missed: splitting region at control altering definition _694 = operator new (_680);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 120
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 55
+    src/pipeline/pipeline.cpp:263:1: missed: splitting region at control altering definition _949 = std::__cxx11::basic_string<char>::_M_create (&D.68808, &__dnew, 0);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 125
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 124
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 123
+    src/pipeline/pipeline.cpp:81:11: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60682, _1016, _1017);
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 122
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb338
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::vector<unsigned char>::~vector (&canvas);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 121
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb341
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 79
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 75
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I2);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 71
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb389
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 54
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 53
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 52
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 51
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 50
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 49
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 46
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I1);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 44
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb466
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 27
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 26
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 25
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 24
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 23
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 22
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 19
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 17
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 16
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 15
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 14
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 13
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 12
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 11
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 10
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 9
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 5
+
+============================================================
+OPTIMIZATION LEVEL: -O3
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 158 loop(s) in src/ failed to vectorize ]
+  src/filters/NMS.cpp:
+    src/filters/NMS.cpp:15:50: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:15:50: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:17:52: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:17:52: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:12:22: missed: statement clobbers memory: Image::Image (output_48(D), W_46, H_47);
+  src/filters/direction.cpp:
+    src/filters/direction.cpp:12:28: missed: couldn't vectorize loop
+    src/filters/direction.cpp:12:28: missed: not vectorized: control flow in loop.
+    src/filters/direction.cpp:10:37: missed: statement clobbers memory: Image::Image (output_16(D), _2, _1);
+    src/filters/direction.cpp:15:23: missed: statement clobbers memory: _7 = atan2 (_6, _4);
+  src/filters/gaussian.cpp:
+    src/filters/gaussian.cpp:29:28: missed: couldn't vectorize loop
+    src/filters/gaussian.cpp:29:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/gaussian.cpp:9:7: missed: splitting region at control altering definition _160 = operator new (100);
+    src/filters/gaussian.cpp:18:5: missed: splitting region at dominance boundary bb3
+    src/filters/gaussian.cpp:27:43: missed: not vectorized: statement can throw an exception: Image::Image (output_44(D), prephitmp_383, _190);
+    src/filters/gaussian.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 9
+    src/filters/gaussian.cpp:40:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/hysterisis.cpp:
+    src/filters/hysterisis.cpp:35:45: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:35:45: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:55:31: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:55:31: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:24:27: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:24:27: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:9:7: missed: splitting region at control altering definition _138 = operator new (64);
+    src/filters/hysterisis.cpp:14:22: missed: statement clobbers memory: Image::Image (output_39(D), W_37, H_38);
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 15
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 12
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 3
+    src/filters/hysterisis.cpp:44:48: missed: splitting region at dominance boundary bb18
+    src/filters/hysterisis.cpp:33:12: missed: splitting region at dominance boundary bb81
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb82
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb83
+  src/filters/magnitude.cpp:
+    src/filters/magnitude.cpp:13:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:13:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:11:37: missed: statement clobbers memory: Image::Image (output_15(D), _2, _1);
+    src/filters/magnitude.cpp:33:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:33:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:31:37: missed: statement clobbers memory: Image::Image (output_18(D), _2, _1);
+  src/filters/sobel.cpp:
+    src/filters/sobel.cpp:8:12: missed: splitting region at control altering definition _48 = operator new (36);
+    src/filters/sobel.cpp:15:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:21:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve.constprop (input_17(D), &kernel); [return slot optimization]
+    src/filters/sobel.cpp:21:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:22:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+    src/filters/sobel.cpp:24:12: missed: splitting region at control altering definition _48 = operator new (36);
+    src/filters/sobel.cpp:31:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:37:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve.constprop (input_17(D), &kernel); [return slot optimization]
+    src/filters/sobel.cpp:37:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:38:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/threshold.cpp:
+    src/filters/threshold.cpp:14:28: missed: couldn't vectorize loop
+    src/filters/threshold.cpp:14:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/threshold.cpp:12:43: missed: statement clobbers memory: Image::Image (output_9(D), _2, _1);
+  src/image/image.cpp:
+    src/image/image.cpp:12:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:55:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:18:6: missed: splitting region at control altering definition _39 = std::basic_filebuf<char>::open (&file._M_filebuf, _35, 12);
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:27:14: missed: not vectorized: statement can throw an exception: std::basic_istream<char>::read (&file.D.60444, _15, _16);
+    src/image/image.cpp:31:1: missed: statement clobbers memory: std::basic_ifstream<char>::~basic_ifstream (&file);
+    src/image/image.cpp:33:6: missed: splitting region at control altering definition _35 = std::basic_filebuf<char>::open (&file._M_filebuf, _31, 20);
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:42:15: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60614, _14, _15);
+    src/image/image.cpp:46:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+  src/main.cpp:
+    src/main.cpp:25:21: missed: couldn't vectorize loop
+    src/main.cpp:25:21: missed: not vectorized: control flow in loop.
+    src/main.cpp:7:5: missed: splitting region at control altering definition _42 = std::__cxx11::basic_string<char>::_M_create (&D.56666, &__dnew, 0);
+    src/main.cpp:11:42: missed: statement clobbers memory: Image::Image (&image, 168, 128);
+    src/main.cpp:12:24: missed: not vectorized: statement can throw an exception: _10 = Image::load_raw (&image, &D.56666);
+    src/main.cpp:12:24: missed: splitting region at control altering definition _16 = stop_timer (100);
+    src/main.cpp:19:17: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:22:16: missed: not vectorized: statement can throw an exception: start_timer ();
+    src/main.cpp:25:21: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:27:44: missed: not vectorized: statement can throw an exception: _16 = stop_timer (100);
+    src/main.cpp:27:44: missed: splitting region at control altering definition _23 = std::basic_ostream<char>::_M_insert<double> (&cout, _16);
+    src/main.cpp:7:5: missed: splitting region at dominance boundary bb18
+    src/main.cpp:7:5: missed: not vectorized: statement can throw an exception: resx 6
+  src/pipeline/pipeline.cpp:
+    src/pipeline/pipeline.cpp:69:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:69:24: missed: not vectorized: multiple nested loops.
+    src/pipeline/pipeline.cpp:58:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:58:24: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:58:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:58:24: missed: not vectorized: number of iterations cannot be computed.
+    src/pipeline/pipeline.cpp:263:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:263:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:254:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:254:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:166:6: missed: splitting region at control altering definition gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:172:20: missed: statement clobbers memory: blurred = gaussian_blur (input_111(D)); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: not vectorized: statement can throw an exception: gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: splitting region at control altering definition gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: not vectorized: statement can throw an exception: gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: splitting region at control altering definition magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: not vectorized: statement can throw an exception: magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: splitting region at control altering definition magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: not vectorized: statement can throw an exception: magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: splitting region at control altering definition direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: not vectorized: statement can throw an exception: direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: splitting region at control altering definition thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: not vectorized: statement can throw an exception: thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: splitting region at control altering definition thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: not vectorized: statement can throw an exception: thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: splitting region at control altering definition thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: not vectorized: statement can throw an exception: thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: splitting region at control altering definition thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: not vectorized: statement can throw an exception: thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: splitting region at control altering definition edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: not vectorized: statement can throw an exception: edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: splitting region at control altering definition edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: not vectorized: statement can throw an exception: edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: splitting region at control altering definition _414 = operator new (_395);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 119
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 28
+    src/pipeline/pipeline.cpp:254:1: missed: splitting region at control altering definition _663 = operator new (_644);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 120
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 55
+    src/pipeline/pipeline.cpp:263:1: missed: splitting region at control altering definition _883 = std::__cxx11::basic_string<char>::_M_create (&D.68808, &__dnew, 0);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 125
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 124
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 123
+    src/pipeline/pipeline.cpp:81:11: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60682, _944, _945);
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 122
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb345
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::vector<unsigned char>::~vector (&canvas);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 121
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb348
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 79
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 75
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I2);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 71
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb395
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 54
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 53
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 52
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 51
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 50
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 49
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 46
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I1);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 44
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb485
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 27
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 26
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 25
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 24
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 23
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 22
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 19
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 17
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 16
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 15
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 14
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 13
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 12
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 11
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 10
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 9
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 5
+
+============================================================
+OPTIMIZATION LEVEL: -Os
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 0 loop(s) in src/ failed to vectorize ]
+  (none — or vectorization not attempted at this level)
+
+============================================================
+OPTIMIZATION LEVEL: -Ofast
+============================================================
+
+[ VECTORIZED — 0 loop(s) successfully auto-vectorized ]
+  (none at this level)
+
+[ MISSED — 157 loop(s) in src/ failed to vectorize ]
+  src/filters/NMS.cpp:
+    src/filters/NMS.cpp:15:50: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:15:50: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:17:52: missed: couldn't vectorize loop
+    src/filters/NMS.cpp:17:52: missed: not vectorized: control flow in loop.
+    src/filters/NMS.cpp:12:22: missed: statement clobbers memory: Image::Image (output_48(D), W_46, H_47);
+  src/filters/direction.cpp:
+    src/filters/direction.cpp:12:28: missed: couldn't vectorize loop
+    src/filters/direction.cpp:12:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/direction.cpp:10:37: missed: statement clobbers memory: Image::Image (output_18(D), _2, _1);
+  src/filters/gaussian.cpp:
+    src/filters/gaussian.cpp:29:28: missed: couldn't vectorize loop
+    src/filters/gaussian.cpp:29:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/gaussian.cpp:9:7: missed: splitting region at control altering definition _160 = operator new (100);
+    src/filters/gaussian.cpp:18:5: missed: splitting region at dominance boundary bb3
+    src/filters/gaussian.cpp:27:43: missed: not vectorized: statement can throw an exception: Image::Image (output_44(D), prephitmp_383, _190);
+    src/filters/gaussian.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 9
+    src/filters/gaussian.cpp:40:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/hysterisis.cpp:
+    src/filters/hysterisis.cpp:35:45: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:35:45: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:55:31: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:55:31: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:24:27: missed: couldn't vectorize loop
+    src/filters/hysterisis.cpp:24:27: missed: not vectorized: control flow in loop.
+    src/filters/hysterisis.cpp:9:7: missed: splitting region at control altering definition _138 = operator new (64);
+    src/filters/hysterisis.cpp:14:22: missed: statement clobbers memory: Image::Image (output_39(D), W_37, H_38);
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 15
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 12
+    src/filters/hysterisis.cpp:9:7: missed: not vectorized: statement can throw an exception: resx 3
+    src/filters/hysterisis.cpp:44:48: missed: splitting region at dominance boundary bb18
+    src/filters/hysterisis.cpp:33:12: missed: splitting region at dominance boundary bb81
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb82
+    src/filters/hysterisis.cpp:87:12: missed: splitting region at dominance boundary bb83
+  src/filters/magnitude.cpp:
+    src/filters/magnitude.cpp:13:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:13:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:11:37: missed: statement clobbers memory: Image::Image (output_15(D), _2, _1);
+    src/filters/magnitude.cpp:33:28: missed: couldn't vectorize loop
+    src/filters/magnitude.cpp:33:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/magnitude.cpp:31:37: missed: statement clobbers memory: Image::Image (output_18(D), _2, _1);
+  src/filters/sobel.cpp:
+    src/filters/sobel.cpp:8:12: missed: splitting region at control altering definition _48 = operator new (36);
+    src/filters/sobel.cpp:15:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:21:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve.constprop (input_17(D), &kernel); [return slot optimization]
+    src/filters/sobel.cpp:21:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:22:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+    src/filters/sobel.cpp:24:12: missed: splitting region at control altering definition _48 = operator new (36);
+    src/filters/sobel.cpp:31:5: missed: splitting region at dominance boundary bb3
+    src/filters/sobel.cpp:37:10: missed: not vectorized: statement can throw an exception: *_16(D) = convolve.constprop (input_17(D), &kernel); [return slot optimization]
+    src/filters/sobel.cpp:37:10: missed: splitting region at dominance boundary bb6
+    src/filters/sobel.cpp:38:1: missed: statement clobbers memory: std::vector<int>::~vector (&kernel);
+  src/filters/threshold.cpp:
+    src/filters/threshold.cpp:14:28: missed: couldn't vectorize loop
+    src/filters/threshold.cpp:14:28: missed: not vectorized: number of iterations cannot be computed.
+    src/filters/threshold.cpp:12:43: missed: statement clobbers memory: Image::Image (output_9(D), _2, _1);
+  src/image/image.cpp:
+    src/image/image.cpp:12:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:55:7: missed: not vectorized: vectorization is not profitable.
+    src/image/image.cpp:18:6: missed: splitting region at control altering definition _39 = std::basic_filebuf<char>::open (&file._M_filebuf, _35, 12);
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:18:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:27:14: missed: not vectorized: statement can throw an exception: std::basic_istream<char>::read (&file.D.60444, _15, _16);
+    src/image/image.cpp:31:1: missed: statement clobbers memory: std::basic_ifstream<char>::~basic_ifstream (&file);
+    src/image/image.cpp:33:6: missed: splitting region at control altering definition _35 = std::basic_filebuf<char>::open (&file._M_filebuf, _31, 20);
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 7
+    src/image/image.cpp:33:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/image/image.cpp:42:15: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60614, _14, _15);
+    src/image/image.cpp:46:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+  src/main.cpp:
+    src/main.cpp:25:21: missed: couldn't vectorize loop
+    src/main.cpp:25:21: missed: not vectorized: control flow in loop.
+    src/main.cpp:7:5: missed: splitting region at control altering definition _42 = std::__cxx11::basic_string<char>::_M_create (&D.56666, &__dnew, 0);
+    src/main.cpp:11:42: missed: statement clobbers memory: Image::Image (&image, 168, 128);
+    src/main.cpp:12:24: missed: not vectorized: statement can throw an exception: _10 = Image::load_raw (&image, &D.56666);
+    src/main.cpp:12:24: missed: splitting region at control altering definition _16 = stop_timer (100);
+    src/main.cpp:19:17: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:22:16: missed: not vectorized: statement can throw an exception: start_timer ();
+    src/main.cpp:25:21: missed: not vectorized: statement can throw an exception: run_pipeline (&image);
+    src/main.cpp:27:44: missed: not vectorized: statement can throw an exception: _16 = stop_timer (100);
+    src/main.cpp:27:44: missed: splitting region at control altering definition _23 = std::basic_ostream<char>::_M_insert<double> (&cout, _16);
+    src/main.cpp:7:5: missed: splitting region at dominance boundary bb18
+    src/main.cpp:7:5: missed: not vectorized: statement can throw an exception: resx 6
+  src/pipeline/pipeline.cpp:
+    src/pipeline/pipeline.cpp:69:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:69:24: missed: not vectorized: multiple nested loops.
+    src/pipeline/pipeline.cpp:58:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:58:24: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:58:24: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:58:24: missed: not vectorized: number of iterations cannot be computed.
+    src/pipeline/pipeline.cpp:263:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:263:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:254:1: missed: couldn't vectorize loop
+    src/pipeline/pipeline.cpp:254:1: missed: not vectorized: control flow in loop.
+    src/pipeline/pipeline.cpp:166:6: missed: splitting region at control altering definition gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:172:20: missed: statement clobbers memory: blurred = gaussian_blur (input_111(D)); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: not vectorized: statement can throw an exception: gx = sobel_x (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:180:16: missed: splitting region at control altering definition gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: not vectorized: statement can throw an exception: gy = sobel_y (&blurred); [return slot optimization]
+    src/pipeline/pipeline.cpp:183:16: missed: splitting region at control altering definition magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: not vectorized: statement can throw an exception: magnitude_l1 = gradient_magnitude_l1 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:191:3: missed: splitting region at control altering definition magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: not vectorized: statement can throw an exception: magnitude_l2 = gradient_magnitude_l2 (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:196:3: missed: splitting region at control altering definition direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: not vectorized: statement can throw an exception: direction = gradient_direction (&gx, &gy); [return slot optimization]
+    src/pipeline/pipeline.cpp:208:3: missed: splitting region at control altering definition thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: not vectorized: statement can throw an exception: thinned_l1 = non_max_suppression (&magnitude_l1, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:215:63: missed: splitting region at control altering definition thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: not vectorized: statement can throw an exception: thinned_l2 = non_max_suppression (&magnitude_l2, &direction); [return slot optimization]
+    src/pipeline/pipeline.cpp:216:63: missed: splitting region at control altering definition thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: not vectorized: statement can throw an exception: thresholded_I1 = double_threshold (&thinned_l1, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:224:60: missed: splitting region at control altering definition thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: not vectorized: statement can throw an exception: thresholded_I2 = double_threshold (&thinned_l2, 50, 150); [return slot optimization]
+    src/pipeline/pipeline.cpp:225:60: missed: splitting region at control altering definition edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: not vectorized: statement can throw an exception: edges_l1 = hysteresis (&thresholded_I1); [return slot optimization]
+    src/pipeline/pipeline.cpp:233:43: missed: splitting region at control altering definition edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: not vectorized: statement can throw an exception: edges_l2 = hysteresis (&thresholded_I2); [return slot optimization]
+    src/pipeline/pipeline.cpp:234:43: missed: splitting region at control altering definition _414 = operator new (_395);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 119
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 28
+    src/pipeline/pipeline.cpp:254:1: missed: splitting region at control altering definition _663 = operator new (_644);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 120
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 55
+    src/pipeline/pipeline.cpp:263:1: missed: splitting region at control altering definition _883 = std::__cxx11::basic_string<char>::_M_create (&D.68808, &__dnew, 0);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 125
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 124
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 123
+    src/pipeline/pipeline.cpp:81:11: missed: not vectorized: statement can throw an exception: std::basic_ostream<char>::write (&file.D.60682, _944, _945);
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::basic_ofstream<char>::~basic_ofstream (&file);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 122
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb345
+    src/pipeline/pipeline.cpp:84:1: missed: statement clobbers memory: std::vector<unsigned char>::~vector (&canvas);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 121
+    src/pipeline/pipeline.cpp:84:1: missed: splitting region at dominance boundary bb348
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 79
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 75
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I2);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 71
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb395
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 54
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 53
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 52
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 51
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 50
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 49
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 46
+    src/pipeline/pipeline.cpp:272:1: missed: statement clobbers memory: std::vector<Stage>::~vector (&stages_I1);
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 44
+    src/pipeline/pipeline.cpp:272:1: missed: splitting region at dominance boundary bb485
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 27
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 26
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 25
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 24
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 23
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 22
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 19
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 17
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 16
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 15
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 14
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 13
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 12
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 11
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 10
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 9
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 6
+    src/pipeline/pipeline.cpp:166:6: missed: not vectorized: statement can throw an exception: resx 5
+
+
+============================================================
+SUMMARY TABLE
+============================================================
+  Level  |   Vectorized |   Missed in src/
+  -------+--------------+-----------------
+  -O0    |            0 |                0
+  -O1    |            0 |                0
+  -O2    |            0 |              169
+  -O3    |            0 |              158
+  -Os    |            0 |                0
+  -Ofast |            0 |              157
+
+WHAT THIS MEANS FOR YOUR REPORT:
+  - "control flow in loop"    -> boundary check prevents vectorization.
+    These are the Gaussian / Sobel inner loops.
+    Phase 6 RVV will handle these manually with intrinsics.
+  - "data dependency"         -> compiler cannot prove independent iterations.
+  - Loops that DO vectorize at -O3 show the compiler can help itself.
+  - Compare vectorized count at -O0 vs -O3 to show what -O3 unlocks.
