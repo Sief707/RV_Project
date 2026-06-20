@@ -5,6 +5,8 @@
 #include "config.hpp"
 #include "timing.hpp"
 
+# define iterations 1
+
 int main()
 {
     Image image(IMAGE_WIDTH, IMAGE_HEIGHT);
@@ -16,8 +18,10 @@ int main()
         std::cerr << "ERROR: could not load images/input.raw\n";
         return 1;
     }
-
+    
+    start_timer();
     run_pipeline(image);
+    double total_runtime_ms = stop_timer(iterations);
 
     std::cout
         << "Pipeline executed successfully."
@@ -66,6 +70,13 @@ if (pct_2(t.magnitude2_ms) > 20) printf(" -> Magnitude %.1f%% — OPTIMIZE WITH 
 if (pct_2(t.gaussian_ms) > 20) printf(" -> Gaussian blur %.1f%% — OPTIMIZE WITH RVV\n", pct_2(t.gaussian_ms));
 if (pct_2(t.sobel_ms) > 20) printf(" -> Sobel %.1f%% — OPTIMIZE WITH RVV\n", pct_2(t.sobel_ms));
 if (pct_2(t.direction_ms) > 20) printf(" -> Sobel %.1f%% — OPTIMIZE WITH RVV\n", pct_2(t.direction_ms));
+
+std::cout << "\n========================================\n";
+std::cout << " Overall Pipeline Timing\n";
+std::cout << "========================================\n";
+std::cout << "MEASURED_TIME_MS: "
+          << total_runtime_ms
+          << " ms\n";
 
 return 0;
 }

@@ -225,9 +225,8 @@ def parse_vec_log(filename):
             line = line.rstrip()
             if 'optimized: loop vectorized' in line:
                 loc = ':'.join(line.split(':')[:3])
-			vectorized.append(loc)
+                vectorized.append(loc)
             elif 'src/' in line and 'missed:' in line:
-                # EXCLUDE structural noise lines from the total count
                 if 'epilogue' in line or 'versioning' in line or 'alignment' in line:
                     continue
                 missed.append(line)
@@ -286,6 +285,7 @@ print()
 print("Written: padding_comparison.txt")
 endef
 export PADDING_SCRIPT
+
 # =========================================================================
 define PADDING_SCRIPT_RISCV
 import re, os
@@ -301,7 +301,6 @@ def parse_vec_log(filename):
             if 'optimized: loop vectorized' in line:
                 vectorized.append(line)
             elif 'src/' in line and 'missed:' in line:
-                # EXCLUDE structural noise lines from the total count
                 if 'epilogue' in line or 'versioning' in line or 'alignment' in line:
                     continue
                 missed.append(line)
@@ -587,11 +586,11 @@ generate_assembly:
 padding_experiment:
 	@echo ">>> Phase 4 Deeper Idea: Padding Experiment"
 	@echo ">>> Step 1/3: Building WITHOUT padding (-O3, boundary check) ..."
-	@OPT_LEVEL="$(OPT_LEVEL) -fopt-info-vec-all" ./scripts/build_host.sh > padding_before_vec.txt 2>&1 \
+	@OPT_LEVEL="-O3 -fopt-info-vec-all" ./scripts/build_host.sh > padding_before_vec.txt 2>&1 \
 		&& echo "    Build WITHOUT padding: SUCCESS" \
 		|| echo "    Build WITHOUT padding: FAILED"
 	@echo ">>> Step 2/3: Building WITH padding (-O3 -DUSE_PADDED_CONV) ..."
-	@OPT_LEVEL="$(OPT_LEVEL) -fopt-info-vec-all -DUSE_PADDED_CONV" ./scripts/build_host.sh > padding_after_vec.txt 2>&1 \
+	@OPT_LEVEL="-O3 -fopt-info-vec-all -DUSE_PADDED_CONV" ./scripts/build_host.sh > padding_after_vec.txt 2>&1 \
 		&& echo "    Build WITH padding: SUCCESS" \
 		|| echo "    Build WITH padding: FAILED"
 	@echo ">>> Step 3/3: Generating comparison report ..."
@@ -607,11 +606,11 @@ padding_experiment:
 padding_experiment_riscv:
 	@echo ">>> Phase 4 Deeper Idea: RISC-V Padding Experiment"
 	@echo ">>> Step 1/3: Building RISC-V WITHOUT padding (-O3, boundary check) ..."
-	@OPT_LEVEL="$(OPT_LEVEL) -fopt-info-vec-all" ./scripts/build_riscv.sh > padding_before_vec_riscv.txt 2>&1 \
+	@OPT_LEVEL="-O3 -fopt-info-vec-all" ./scripts/build_riscv.sh > padding_before_vec_riscv.txt 2>&1 \
 		&& echo "    RISC-V Build WITHOUT padding: SUCCESS" \
 		|| echo "    RISC-V Build WITHOUT padding: FAILED"
 	@echo ">>> Step 2/3: Building RISC-V WITH padding (-O3 -DUSE_PADDED_CONV) ..."
-	@OPT_LEVEL="$(OPT_LEVEL) -fopt-info-vec-all -DUSE_PADDED_CONV" ./scripts/build_riscv.sh > padding_after_vec_riscv.txt 2>&1 \
+	@OPT_LEVEL="-O3 -fopt-info-vec-all -DUSE_PADDED_CONV" ./scripts/build_riscv.sh > padding_after_vec_riscv.txt 2>&1 \
 		&& echo "    RISC-V Build WITH padding: SUCCESS" \
 		|| echo "    RISC-V Build WITH padding: FAILED"
 	@echo ">>> Step 3/3: Generating RISC-V comparison report ..."
