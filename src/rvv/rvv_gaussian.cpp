@@ -1,6 +1,10 @@
 #include "rvv/rvv_gaussian.hpp"
 #include <algorithm>
 #include <cstdint>
+
+#include <algorithm>
+#include <cstdint>
+
 #include <riscv_vector.h>
 
 Image rvv_gaussian_blur(const Image& input)

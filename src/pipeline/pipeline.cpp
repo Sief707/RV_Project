@@ -176,12 +176,12 @@ printf("\n");
 static PipelineResult run_pipeline_internal(const Image& input)
 {
 PipelineResult r;
-
+save_ppm("images/00_input.ppm", input);
 // ==================== step 1: gaussian blur ==================================
 start_timer();
 r.blurred = rvv_gaussian_blur(input);
 r.timings.gaussian_ms = stop_timer(1);
-
+save_ppm("images/01_blurred.ppm", r.blurred);
 // For debugging
 uint8_t max_blur = *std::max_element(r.blurred.pixels.begin(), r.blurred.pixels.end());
 (void)max_blur;
@@ -201,9 +201,16 @@ printf("Stage 2 done: Sobel — max gx = %d\n", max_gx);
 // get the magnitude as |Gx|+|Gy|
 start_timer();
 r.magnitude_l1 = rvv_gradient_magnitude_l1(r.gx, r.gy);
+r.magnitude_l1 = gradient_magnitude_l1(r.gx, r.gy);
+r.timings.magnitude1_ms = stop_timer(1);
+
 // get the magnitude as sqrt(Gx^2+Gy^2)
+start_timer();
 r.magnitude_l2 = gradient_magnitude_l2(r.gx, r.gy);
-r.timings.magnitude_ms = stop_timer(1);
+r.timings.magnitude2_ms = stop_timer(1);
+
+save_ppm("images/02_magnitude_l1.ppm", r.magnitude_l1);
+save_ppm("images/02_magnitude_l2.ppm", r.magnitude_l2);
 
 // For comparing between these 2 ways of magnitude calculation
 print_stats("L1 |Gx|+|Gy|", r.magnitude_l1);
@@ -222,8 +229,14 @@ printf("Stage 4 done: Direction\n");
 // ====================== step 3: non max suppression (NMS) =====================
 start_timer();
 r.thinned_l1 = non_max_suppression(r.magnitude_l1, r.direction);
+r.timings.nms1_ms = stop_timer(1);
+
+start_timer();
 r.thinned_l2 = non_max_suppression(r.magnitude_l2, r.direction);
-r.timings.nms_ms = stop_timer(1);
+r.timings.nms2_ms = stop_timer(1);
+
+save_ppm("images/03_thinned_l1.ppm", r.thinned_l1);
+save_ppm("images/03_thinned_l2.ppm", r.thinned_l2);
 
 printf("\n[Stage 5] Non-Max Suppression:\n");
 print_stats("NMS on L1", r.thinned_l1);
@@ -232,8 +245,14 @@ print_stats("NMS on L2", r.thinned_l2);
 // ==================== step 4: double thresholding ==============================
 start_timer();
 r.thresholded_l1 = double_threshold(r.thinned_l1, 50, 150);
+r.timings.threshold1_ms = stop_timer(1);
+
+start_timer();
 r.thresholded_l2 = double_threshold(r.thinned_l2, 50, 150);
-r.timings.threshold_ms = stop_timer(1);
+r.timings.threshold2_ms = stop_timer(1);
+
+save_ppm("images/04_thresholded_l1.ppm", r.thresholded_l1);
+save_ppm("images/04_thresholded_l2.ppm", r.thresholded_l2);
 
 printf("\n[Stage 6] Double Threshold (low=50, high=150):\n");
 print_stats("Threshold on L1", r.thresholded_l1);
@@ -242,17 +261,28 @@ print_stats("Threshold on L2", r.thresholded_l2);
 // ===================== step 5: hysterisis ==========================
 start_timer();
 r.edges_l1 = hysteresis(r.thresholded_l1);
+r.timings.hysteresis1_ms = stop_timer(1);
+
+start_timer();
 r.edges_l2 = hysteresis(r.thresholded_l2);
-r.timings.hysteresis_ms = stop_timer(1);
+r.timings.hysteresis2_ms = stop_timer(1);
+
+save_ppm("images/05_edges_l1.ppm", r.edges_l1);
+save_ppm("images/05_edges_l2.ppm", r.edges_l2);
 
 printf("\n[Stage 7] Hysteresis (final edge map):\n");
 print_stats("Final edges L1", r.edges_l1);
 print_stats("Final edges L2", r.edges_l2);
 
-r.timings.total_ms = r.timings.gaussian_ms + r.timings.sobel_ms +
-r.timings.magnitude_ms + r.timings.direction_ms +
-r.timings.nms_ms + r.timings.threshold_ms +
-r.timings.hysteresis_ms;
+r.timings.total_1_ms = r.timings.gaussian_ms + r.timings.sobel_ms +
+r.timings.magnitude1_ms + r.timings.direction_ms +
+r.timings.nms1_ms + r.timings.threshold1_ms +
+r.timings.hysteresis1_ms;
+
+r.timings.total_2_ms = r.timings.gaussian_ms + r.timings.sobel_ms +
+r.timings.magnitude2_ms + r.timings.direction_ms +
+r.timings.nms2_ms + r.timings.threshold2_ms +
+r.timings.hysteresis2_ms;
 
 return r;
 }
