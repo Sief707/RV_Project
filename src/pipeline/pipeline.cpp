@@ -1,6 +1,10 @@
 #include "pipeline/pipeline.hpp"
 
 #include "filters/direction.hpp"
+#include "rvv/rvv_gaussian.hpp"
+#include "rvv/rvv_magnitude.hpp"
+#include "rvv/rvv_sobel.hpp"
+#include "filters/direction_fast.hpp"
 #include "filters/gaussian.hpp"
 #include "filters/magnitude.hpp"
 #include "filters/sobel.hpp"
@@ -175,7 +179,7 @@ PipelineResult r;
 
 // ==================== step 1: gaussian blur ==================================
 start_timer();
-r.blurred = gaussian_blur(input);
+r.blurred = rvv_gaussian_blur(input);
 r.timings.gaussian_ms = stop_timer(1);
 
 // For debugging
@@ -196,7 +200,7 @@ printf("Stage 2 done: Sobel — max gx = %d\n", max_gx);
 
 // get the magnitude as |Gx|+|Gy|
 start_timer();
-r.magnitude_l1 = gradient_magnitude_l1(r.gx, r.gy);
+r.magnitude_l1 = rvv_gradient_magnitude_l1(r.gx, r.gy);
 // get the magnitude as sqrt(Gx^2+Gy^2)
 r.magnitude_l2 = gradient_magnitude_l2(r.gx, r.gy);
 r.timings.magnitude_ms = stop_timer(1);
@@ -208,7 +212,7 @@ printf("Stage 3 done: Magnitude L1 and L2\n");
 
 // get the direction
 start_timer();
-r.direction = gradient_direction(r.gx, r.gy);
+r.direction = fast_gradient_direction(r.gx, r.gy);
 r.timings.direction_ms = stop_timer(1);
 printf("Stage 4 done: Direction\n");
 
