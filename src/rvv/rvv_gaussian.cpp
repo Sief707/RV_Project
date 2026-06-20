@@ -1,4 +1,6 @@
 #include "rvv/rvv_gaussian.hpp"
+#include <algorithm>
+#include <cstdint>
 
 #include <algorithm>
 #include <cstdint>

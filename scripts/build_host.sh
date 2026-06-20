@@ -11,6 +11,7 @@ g++ \
     src/filters/sobel.cpp \
     src/filters/magnitude.cpp \
     src/filters/direction.cpp \
+    src/filters/direction_fast.cpp \
     src/filters/NMS.cpp \
     src/filters/threshold.cpp \
     src/filters/hysterisis.cpp \
